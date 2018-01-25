@@ -8,9 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.github.anastr.speedviewlib.PointerSpeedometer;
-import com.github.anastr.speedviewlib.SpeedView;
 
 public class ActivityMonitoring extends AppCompatActivity {
 
@@ -25,8 +25,13 @@ public class ActivityMonitoring extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Tampilkan grafik log ?", Snackbar.LENGTH_LONG)
+                        .setAction("Ya", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(ActivityMonitoring.this,"Menampilkan data / grafik log", Toast.LENGTH_LONG).show();
+                            }
+                        }).show();
             }
         });
 
@@ -36,19 +41,13 @@ public class ActivityMonitoring extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity_monitoring, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

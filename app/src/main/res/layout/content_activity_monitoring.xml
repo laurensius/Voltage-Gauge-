@@ -38,6 +38,14 @@
             android:orientation="vertical"
             android:gravity="center"
             android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Last Recorded : 15:45:56 WIB"
+                android:textStyle="bold"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -46,7 +54,8 @@
                 android:layout_margin="16dp"
                 android:textAlignment="center"
                 android:background="#36D7B7"
-                android:padding="16dp"/>
+                android:padding="16dp"
+                android:textStyle="bold"/>
         </LinearLayout>
 
 
