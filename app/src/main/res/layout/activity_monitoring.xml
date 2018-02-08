@@ -1,48 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.laurensius_dede_suhardiman.voltagemonitoringsystem.ActivityMonitoring">
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+    tools:context="com.laurensius_dede_suhardiman.voltagemonitoringsystem.Monitoring">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:background="@mipmap/collapsebg"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <LinearLayout
+                android:id="@+id/ll_error"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_activity_monitoring" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        android:src="@drawable/ic_flash_on_black_24dp"/>
-
-</android.support.design.widget.CoordinatorLayout>
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="256px"
+                    android:layout_height="256px"
+                    android:src="@mipmap/nonetwork"
+                    android:layout_margin="16dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14pt"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:text="Whooops . . ."/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="8pt"
+                    android:textAlignment="center"
+                    android:textStyle="italic"
+                    android:text="Tidak dapat terhubung ke server.\nPeriksa layanan internet.\nAplikasi akan reload secara otomatis ketika terhubung ke layanan internet."/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_success"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center">
+                    <com.github.anastr.speedviewlib.PointerSpeedometer
+                        android:id="@+id/ps_voltase"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:sv_unit=" Volts"
+                        app:sv_speedTextPosition="BOTTOM_CENTER"
+                        app:sv_backgroundCircleColor="#DDD"
+                        app:sv_indicatorColor="#FFF"
+                        app:sv_centerCircleColor="#B2FF59"
+                        app:sv_speedometerColor="#64DD17"
+                        app:sv_minSpeed="0"
+                        app:sv_maxSpeed="25"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/box">
+                        <ImageView
+                            android:id="@+id/iv_batre"
+                            android:layout_width="96px"
+                            android:layout_height="96px"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/batre"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="6pt"
+                            android:textAlignment="center"
+                            android:textStyle="italic"
+                            android:text="Tegangan Baterai"/>
+                        <TextView
+                            android:id="@+id/tv_voltage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="8pt"
+                            android:textAlignment="center"
+                            android:textStyle="bold"
+                            android:text="0.0 V"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/box">
+                        <ImageView
+                            android:id="@+id/iv_status"
+                            android:layout_width="96px"
+                            android:layout_height="96px"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/good"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="6pt"
+                            android:textAlignment="center"
+                            android:textStyle="italic"
+                            android:text="Status Baterai"/>
+                        <TextView
+                            android:id="@+id/tv_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="8pt"
+                            android:textAlignment="center"
+                            android:textStyle="bold"
+                            android:text="-"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/box">
+                        <ImageView
+                            android:layout_width="96px"
+                            android:layout_height="96px"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/kalender"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="6pt"
+                            android:textAlignment="center"
+                            android:textStyle="italic"
+                            android:text="Tanggal\nData Tersimpan"/>
+                        <TextView
+                            android:id="@+id/tv_tanggal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="8pt"
+                            android:textAlignment="center"
+                            android:textStyle="bold"
+                            android:text="00-00-0000"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/box">
+                        <ImageView
+                            android:layout_width="96px"
+                            android:layout_height="96px"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/jam"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="6pt"
+                            android:textAlignment="center"
+                            android:textStyle="italic"
+                            android:text="Jam\nData Tersimpan"/>
+                        <TextView
+                            android:id="@+id/tv_jam"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="8pt"
+                            android:textAlignment="center"
+                            android:textStyle="bold"
+                            android:text="00:00:00 WIB"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
