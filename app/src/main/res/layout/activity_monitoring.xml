@@ -62,7 +62,10 @@
                         app:sv_centerCircleColor="#B2FF59"
                         app:sv_speedometerColor="#64DD17"
                         app:sv_minSpeed="0"
-                        app:sv_maxSpeed="25"/>
+                        app:sv_maxSpeed="25"
+                        app:sv_tickNumber="0"
+                        app:sv_markColor="#DDD"
+                        />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -189,6 +192,40 @@
                             android:textAlignment="center"
                             android:textStyle="bold"
                             android:text="00:00:00 WIB"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+                        <Button
+                            android:id="@+id/btn_grafik"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#FBC02D"
+                            android:textColor="#EEE"
+                            android:text="LIHAT GRAFIK"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+                        <Button
+                            android:id="@+id/btn_logout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#F44336"
+                            android:textColor="#EEE"
+                            android:text="LOGOUT"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

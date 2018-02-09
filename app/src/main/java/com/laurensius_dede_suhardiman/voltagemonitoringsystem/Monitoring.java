@@ -1,13 +1,18 @@
 package com.laurensius_dede_suhardiman.voltagemonitoringsystem;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +32,8 @@ public class Monitoring extends AppCompatActivity {
     private TextView tvVoltage,tvStatus,tvTanggal,tvJam;
     private ImageView ivBatre, ivStatus;
     private LinearLayout llError, llSuccess;
+    private Button btnGrafik, btnLogout;
+    private Dialog dialBox;
     boolean loaddata;
     private String JSON_data;
     private String url;
@@ -43,6 +50,7 @@ public class Monitoring extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring);
         TAG = getResources().getString(R.string.tag);
+        dialBox = createDialogBox();
         tvVoltage = (TextView)findViewById(R.id.tv_voltage);
         tvStatus = (TextView)findViewById(R.id.tv_status);
         tvTanggal = (TextView)findViewById(R.id.tv_tanggal);
@@ -55,8 +63,25 @@ public class Monitoring extends AppCompatActivity {
         llSuccess.setVisibility(View.VISIBLE);
         psVolstase = (PointerSpeedometer)findViewById(R.id.ps_voltase);
         psVolstase.setWithTremble(false);
-        psVolstase.setTicks(0,5,10,15,20,25);
         psVolstase.setSpeedAt(0);
+        psVolstase.setTickNumber(6);
+        psVolstase.setTicks(0,5,10,15,20,25);
+        btnGrafik = (Button)findViewById(R.id.btn_grafik);
+        btnGrafik.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Monitoring.this,GrafikLog.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        btnLogout = (Button)findViewById(R.id.btn_logout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialBox.show();
+            }
+        });
         final Handler handler = new Handler();
         Timer timer = new Timer();
         TimerTask doAsynchronousTask = new TimerTask() {
@@ -74,6 +99,11 @@ public class Monitoring extends AppCompatActivity {
             }
         };
         timer.schedule(doAsynchronousTask, 0, 5000);
+    }
+
+    @Override
+    public void onBackPressed() {
+        dialBox.show();
     }
 
     private class AsyncMonitoring extends AsyncTask<Void, Void, Void> {
@@ -128,7 +158,7 @@ public class Monitoring extends AppCompatActivity {
                 tvTanggal.setText(splited[0]);
                 tvJam.setText(splited[1] + " WIB");
                 Float float_voltage = Float.parseFloat(voltage);
-                psVolstase.setSpeedAt(float_voltage);
+                psVolstase.speedTo(float_voltage,500);
                 tvVoltage.setText(String.valueOf(float_voltage) + " V");
                 tvStatus.setText(status);
                 if(status.equals("GOOD")){
@@ -158,5 +188,23 @@ public class Monitoring extends AppCompatActivity {
                 loaddata_false++;
             }
         }
+    }
+
+    private Dialog createDialogBox(){
+        dialBox = new AlertDialog.Builder(this)
+                .setTitle("Konfirmasi Keluar")
+                .setMessage("Apakah Anda yakin akan keluar dari aplikasi ?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialBox.dismiss();
+                    }
+                })
+                .create();
+        return dialBox;
     }
 }
